@@ -1,5 +1,5 @@
 class Q {
-	constructor(epsilon=0.2, a_size=4, learning_rate=1, discount_factor=0.8) {
+	constructor({epsilon=0.2, a_size=4, learning_rate=1, discount_factor=0.8}) {
 		this.discount_factor = discount_factor;
 		this.learning_rate = learning_rate;
 		this.epsilon = epsilon;
@@ -11,7 +11,7 @@ class Q {
 	}
 	action_for_step(step, deterministic=false) {
 		if (!this.table[step]) this.initializeRow(step);
-		const index = (!deterministic && (Math.random() < this.epsilon)) ? this._randomInt(this.a_size) : this.argmax(this.table[step]);
+		const index = (!deterministic && (Math.random() < this.epsilon)) ? this._randomInt(this.a_size) : Q.argmax(this.table[step]);
 		return {
 			index: index,
 			update: this._update.bind(this, step, index, this.table[step][index])
@@ -25,7 +25,7 @@ class Q {
 		}
 		this.table[index] = row;
 	}
-	argmax(array) {
+	static argmax(array) {
 		const max = Math.max(...array);
 		return array.indexOf(max);
 	}

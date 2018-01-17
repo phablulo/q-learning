@@ -10,14 +10,14 @@ let step = 0;
 let points = 0;
 let stop = false;
 let time = 1;
-(function act() {
+function act() {
 	// console.log('step',step);
-	const data = q.action_for_step(step++);
+	const data = q.action_for_step(step);
 	const action = actions[data.index];
 	const new_x = (action == 'left' ? x-1 : action == 'right' ? x+1 : x);
 	const new_y = (action == 'up' ? y-1 : action == 'down' ? y+1 : y);
 
-	const pnts  = map.pointsOn(new_x, new_y);// - step++;
+	const pnts  = map.pointsOn(new_x, new_y) - step++;
 	// console.log("pnts", pnts)
 	data.update(pnts);
 
@@ -36,4 +36,4 @@ let time = 1;
 		player.goto(x, y);
 	}
 	if (!stop) return setTimeout(act, time);
-})();
+}

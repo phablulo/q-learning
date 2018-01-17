@@ -29,3 +29,12 @@ Limites ajudam a convergir pra o menor número de steps: vencendo ou não.
 considerações:
 	usar softmax em cada step na matriz? Acho que não chega a fazer diferença.
 	usar com algoritmos evolucionários?
+
+
+Usando algoritmos evolucionários:
+	todos os parâmetros são a média dos dois melhores + um fator random entre -0.05 e 0.05
+	Usando uma população com 5 membros, todos eles convergiram para vencer em 19 steps. Isso levou um tempo, though.
+	diminui as tentativas máximas de 500 pra 50:
+	Usando uma população de 10 membros, não houve convergência após alguns minutos.
+	Manti os pais na população:
+		Usando uma população de 10 membros, todos convergiram para 7 vencer em steps em menos de 1 minuto
