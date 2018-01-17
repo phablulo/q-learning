@@ -1,0 +1,31 @@
+1- adicionei penalidade por step: isso faz demorar muito mais pra convergir
+2- adicionei limite de número de steps: convergiu um pouco mais rápido
+3- aumentei random de 5% pra 20%: demora MUITO mais a convergir
+
+random: 0.05
+	limite de 40 steps:
+		com penalidade de step: converge para vencer em 13 steps
+		sem penalidade de step: converge para vencer em 9 steps (ou se perde num mínimo local)
+	limite de 20 steps:
+		com penalidade de step: converge para vencer em 10 step
+		sem penalidade de step: converge para ficar indo pra frente e pra trás
+	limite de 12 steps:
+		com penalidade de step: converge para entrar num loop. (1 das vezes que testei, convergiu para vencer em 12 steps)
+		sem penalidade de step: converge pare vencer em 11 steps, 9 steps ou convege pra entrar em loop (loop é pouco provável)
+	limite de 10 steps:
+		com penalidade de step: converge para entrar num loop (10/10 vezes)
+		sem penalidade de step: converge pare vencer em 10 steps (2/10 das vezes) ou loop
+	sem limite de steps:
+		com penalidade de step: converge para vencer em 10 steps, 19 steps, 26 steps, 25 steps. É demorado e, em uma vez, entrou em loop.
+		sem penalidade de step: converge para vencer em 73 steps (testei apenas uma vez)
+
+
+
+vencimentos com muitos steps não são muito repetidos. Provavelmente por causa do discount_factor que decai exponencialmente a cada step.
+A falta de penalidade tende a criar steps inúteis.
+Limites ajudam a convergir pra o menor número de steps: vencendo ou não.
+
+
+considerações:
+	usar softmax em cada step na matriz? Acho que não chega a fazer diferença.
+	usar com algoritmos evolucionários?
