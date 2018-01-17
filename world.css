@@ -1,0 +1,37 @@
+.canvas {
+	display: flex;
+	flex-direction: column;
+	width: 400px;
+	height: 400px;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+	flex-grow: 1;
+}
+.row > div {
+	display: block;
+	flex: 1 1 0;
+}
+.block {
+	background-color: black;
+}
+.pass {
+	background-color: bisque;
+}
+.hurt {
+	background-color: orange;
+}
+.good {
+	background-color: aquamarine;
+}
+.vgood {
+	background-color: lime;
+}
+.player {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	border-radius: 50%;
+	background-color: blue;
+}
