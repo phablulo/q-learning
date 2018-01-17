@@ -29,7 +29,7 @@ class Map {
 			case 0:
 			case 1: return    0;
 			case 2: return   -1;
-			case 3: return   30;
+			case 3: return    5;
 			case 4: return  900;
 			default: throw new Error('hn? '+ this.map[y][x]);
 		}

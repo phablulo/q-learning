@@ -37,4 +37,11 @@ Usando algoritmos evolucionários:
 	diminui as tentativas máximas de 500 pra 50:
 	Usando uma população de 10 membros, não houve convergência após alguns minutos.
 	Manti os pais na população:
-		Usando uma população de 10 membros, todos convergiram para 7 vencer em steps em menos de 1 minuto
+	Usando uma população de 10 membros, todos convergiram para 7 vencer em steps em menos de 1 minuto
+	Alterei o mapa para algo maior:
+	Sem convergência após bastante tempo.
+	Alterei o valor da recompensa:
+	30 minutos e 770 gerações para convergir.
+
+Considerações dos algoritmos evolucionários:
+	É interessante percebeber que o epsilon_greedy tente a ser <= 0 uma vez que um caminho satisfatório (mas não necessariamente o melhor) é encontrado.

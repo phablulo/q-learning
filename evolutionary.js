@@ -1,14 +1,14 @@
 "use strict";
-const size = 400;
+const size = [400, 400];
 let   [x, y] = [1, 4];
-const [dx, dy] = map.dimensions().map(x => size/x);
+const [dx, dy] = map.dimensions().map((x, i) => size[i]/x);
 const population_size = 10;
 const colors = ["blue", "red", "yellow", "cyan", "deeppink", "fuchsia", "maroon", "orangered", "orchid", "purple", "thistle", "tomato", "violet", "yellowgreen"]
 
 let qsp = Array(population_size).fill(0).map((_, i) => {
 	return {
 		q: new Q({discount_factor: Math.random(), epsilon: Math.random()}),
-		p: new Player(dx, dy, x, y, colors[i], true)
+		p: new Player(dx, dy, x, y, colors[i % colors.length], true)
 	}
 });
 function rand() {
@@ -49,12 +49,12 @@ function act(agent, max_steps, max_iter, done) {
 		reinit(agent.p);
 		return done();
 	}
-	const data = agent.q.action_for_step(step);
+	const data = agent.q.action_for_step(step++);
 	const action = actions[data.index];
 	const new_x = (action == 'left' ? x-1 : action == 'right' ? x+1 : x);
 	const new_y = (action == 'up' ? y-1 : action == 'down' ? y+1 : y);
 
-	const pnts = map.pointsOn(new_x, new_y) - step++;
+	const pnts = map.pointsOn(new_x, new_y) - 1;
 	data.update(pnts);
 
 	points += pnts;
@@ -87,7 +87,7 @@ function doit(callback) {
 		return callback();
 	}
 	agent.p.show();
-	act(agent, 40, 50, () => {
+	act(agent, 20, 30, () => {
 		agent.p.hide();
 		players_points[_index++] = cpoints;
 		cpoints = 0;
@@ -96,26 +96,27 @@ function doit(callback) {
 	});
 }
 
-
+let generation = 0;
 let shouldIStop = false;
-function manage() {
+(function manage() {
 	doit(function selection() {
-		console.log("\t","Agent points", players_points)
+		// console.log("\t","Agent points", players_points)
 		const q1_index = Q.argmax(players_points);
 		players_points[q1_index] = -9876543219876542000; // espero não ter nenhum menor que esse
 		const q2_index = Q.argmax(players_points);
 
 		players_points.fill(0);
-
-		console.log("\t","Escolhidos: "+q1_index+' e '+q2_index);
+		const els = qsp.map(d => d.p);
+		console.log("Generation", ++generation);
+		// console.log("\t","Escolhidos: "+q1_index+' e '+q2_index);
 
 		const new_population = reproduce(qsp[q1_index].q, qsp[q2_index].q);
-		qsp = [qsp[q1_index], qsp[q2_index]].concat(new_population.slice(0, population_size-2).map((q, i) => {
+		qsp = [qsp[q1_index].q, qsp[q2_index].q].concat(new_population.slice(2, population_size)).map((q, i) => {
 			return {
 				q: q,
-				p: qsp[i].p
+				p: els[i]
 			}
-		}));
+		});
 		if (!shouldIStop) return manage();
 	});
-}
+})();
