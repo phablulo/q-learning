@@ -4,6 +4,10 @@ let   [x, y] = [1, 4];
 const [dx, dy] = map.dimensions().map((x, i) => size[i]/x);
 const population_size = 10;
 const colors = ["blue", "red", "yellow", "cyan", "deeppink", "fuchsia", "maroon", "orangered", "orchid", "purple", "thistle", "tomato", "violet", "yellowgreen"]
+const wins = document.getElementById('wins');
+const lose = document.getElementById('lose');
+let _wins = 0, _lose = 0;
+let log = false;
 
 let qsp = Array(population_size).fill(0).map((_, i) => {
 	return {
@@ -69,10 +73,12 @@ function act(agent, max_steps, max_iter, done) {
 		[x, y] = [new_x, new_y];
 		agent.p[action]();
 	} else if (status == 'win') {
-		console.log("Win! Score: "+points+'; Steps: '+step);
+		if (log) console.log("Win! Score: "+points+'; Steps: '+step);
+		wins.innerHTML = ++_wins;
 		reinit(agent.p);
 	} else if (status == 'lose') {
-		// console.log("Lose! Score: "+points);
+		if (log) console.log("Lose! Score: "+points);
+		lose.innerHTML = ++_lose;
 		reinit(agent.p);
 	}
 	return setTimeout(act.bind(this, agent, max_steps, max_iter, done), time);
