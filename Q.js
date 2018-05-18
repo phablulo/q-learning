@@ -1,5 +1,5 @@
 class Q {
-	constructor(epsilon=0.2, a_size=4, learning_rate=1, discount_factor=0.8) {
+	constructor({epsilon=0.2, a_size=4, learning_rate=1, discount_factor=0.9}) {
 		this.discount_factor = discount_factor;
 		this.learning_rate = learning_rate;
 		this.epsilon = epsilon;
